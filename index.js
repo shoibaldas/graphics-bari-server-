@@ -73,6 +73,13 @@ async function run() {
             res.send(reviews);
         });
 
+        app.get('/review', async (req, res) => {
+            let query = {}
+            const cursor = reviewsCollection.find(query).sort({ time: -1 });
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
+
         app.get('/reviews/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
